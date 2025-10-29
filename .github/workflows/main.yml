@@ -1,6 +1,61 @@
 name: ecs-push
-on : workflow_dispatch
+on : 
+  workflow_dispatch:
+   
+   inputs:
+    mode:
+        description: 'dockerhub | dockerfile | local'
+        required: true
+        default: 'dockerhub'
+    image_name:
+        required: true
+    image_tag:
+        required: true
+    dockerhub_image:
+        description: 'dockerhub image name including repo only in dockerhub mode'
+        required: false 
+    git_repo:
+        description: 'git repo url in dockerfile mode'
+        required: false
+    ecr_repo:
+        required: true
+
+
 
 jobs:
- steps: 
-   runs-on: self-hosted
+  deploy:
+    runs-on: self-hosted
+    env:
+        TF_VAR_image_tag: ${{ github.event.inputs.image_tag }}
+        TF_VAR_ecr_uri: "588082971984.dkr.ecr.ap-south-1.amazonaws.com/${{ github.event.inputs.ecr_repo }}"
+        TF_VAR_execution_role_arn: "arn:aws:iam::588082971984:role/ecsTaskExecutionRole"
+        TF_VAR_subnets: '["subnet-abc123"]'
+        TF_VAR_security_groups: '["sg-abc123"]'   
+  
+    steps:
+      - name: checkout ecspush
+        uses: actions/checkout@v3
+
+      - name: Run ecs-push
+        run : | 
+              chmod +x ./ecrpush.sh
+              ./ecrpush.sh \
+               "${{ github.event.inputs.mode }}" \
+               "${{ github.event.inputs.image_name }}" \
+               "${{ github.event.inputs.image_tag }}" \
+               "${{ github.event.inputs.dockerhub_image }}" \
+               "${{ github.event.inputs.git_repo }}" \
+               "${{ github.event.inputs.ecr_repo }}"
+
+      - name: set up terraform
+        uses: hashicorp/setup-terraform@v2
+        
+      - name: terraform init
+        run: terraform init
+        
+      - name: terraform plan
+        run: terraform plan -out=tfplan 
+
+      - name: terraform apply
+        run: terraform apply -auto-approve tfplan
+  
