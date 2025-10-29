@@ -29,8 +29,7 @@ jobs:
         TF_VAR_image_tag: ${{ github.event.inputs.image_tag }}
         TF_VAR_ecr_uri: "588082971984.dkr.ecr.ap-south-1.amazonaws.com/${{ github.event.inputs.ecr_repo }}"
         TF_VAR_execution_role_arn: "arn:aws:iam::588082971984:role/ecsTaskExecutionRole"
-        TF_VAR_subnets: '["subnet-abc123"]'
-        TF_VAR_security_groups: '["sg-abc123"]'   
+           
   
     steps:
       - name: checkout ecspush
@@ -38,8 +37,8 @@ jobs:
 
       - name: Run ecs-push
         run : | 
-              chmod +x ./ecrpush.sh
-              ./ecrpush.sh \
+              chmod +x ./ecrpush_cicd.sh
+              ./ecrpush_cicd.sh \
                "${{ github.event.inputs.mode }}" \
                "${{ github.event.inputs.image_name }}" \
                "${{ github.event.inputs.image_tag }}" \
