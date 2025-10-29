@@ -1,0 +1,6 @@
+name: ecs-push
+on : workflow_dispatch
+
+jobs:
+ steps: 
+   runs-on: self-hosted
