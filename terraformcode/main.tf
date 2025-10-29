@@ -72,7 +72,16 @@ resource "aws_vpc_security_group_ingress_rule" "allow_http"{
     from_port        = 80
     to_port          = 80
     ip_protocol         = "tcp"
-    cidr_ipv4 = aws_vpc.test_vpc.cidr_block
+    cidr_ipv4 = "0.0.0.0/0"
+}
+resource "aws_vpc_security_group_ingress_rule" "allow_https"{
+
+    security_group_id = aws_security_group.test_sg.id
+    
+    from_port        = 443
+    to_port          = 443
+    ip_protocol         = "tcp"
+    cidr_ipv4 = "0.0.0.0/0"
 }
 resource "aws_vpc_security_group_ingress_rule" "allow_ssh"{
 
@@ -81,7 +90,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_ssh"{
     from_port        = 22
     to_port          = 22
     ip_protocol         = "tcp"
-    cidr_ipv4 = aws_vpc.test_vpc.cidr_block
+    cidr_ipv4 = "0.0.0.0/0"
 }
 resource "aws_vpc_security_group_egress_rule" "allow_all_outbound"{
 
@@ -90,7 +99,7 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_outbound"{
     from_port        = 0
     to_port          = 0
     ip_protocol         = "-1"
-    cidr_ipv4 = aws_vpc.test_vpc.cidr_block
+    cidr_ipv4 = "0.0.0.0/0"
 }
 
 output "security_group_id" {
