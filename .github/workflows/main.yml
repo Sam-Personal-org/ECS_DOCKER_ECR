@@ -24,7 +24,7 @@ on :
 
 jobs:
   deploy:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     env:
         TF_VAR_image_tag: ${{ github.event.inputs.image_tag }}
         TF_VAR_ecr_uri: "588082971984.dkr.ecr.ap-south-1.amazonaws.com/${{ github.event.inputs.ecr_repo }}"
