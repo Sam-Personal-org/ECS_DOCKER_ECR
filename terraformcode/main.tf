@@ -107,8 +107,16 @@ output "security_group_id" {
 }
 
 #ecs components
+resource "random_suffix" "ecs_cluster_suffix" {
+    length = 4
+    upper  = false
+    special = false
+}
 resource "aws_ecs_cluster" "test_ecs_cluster" {
     name = "test_ecs_cluster"
+    tags = {
+      Name = "test_ecs_cluster_${random_suffix.ecs_cluster_suffix.result}"
+    }
 }
 
 output "ecs_cluster_id" {
@@ -141,7 +149,7 @@ resource "aws_ecs_task_definition" "test_task_definition" {
 }
 
 resource "aws_ecs_service" "test_ecs_service" {
-    name            = "test_ecs_service"
+    name            = "test_ecs_service_${random_suffix.ecs_cluster_suffix.result}"
     cluster         = aws_ecs_cluster.test_ecs_cluster.id
     task_definition = aws_ecs_task_definition.test_task_definition.arn
     desired_count   = 1
