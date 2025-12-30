@@ -11,7 +11,7 @@ REPO_NAME="$6"
 
 # === CONFIG ===
 REGION="ap-south-1"
-ACCOUNT_ID="588082971984"
+ACCOUNT_ID="547445248093"
 ECR_URI="$ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/$REPO_NAME"
 
 echo "Deployment Mode: $MODE"
