@@ -19,6 +19,7 @@ on :
         required: false
     ecr_repo:
         required: true
+        default: 'use-this-format'
 
 
 
