@@ -1,2 +1,3 @@
 FROM nginx:alpine
-COPY indexfile.html /usr/share/nginx/html/indexfile.html
+WORKDIR /usr/share/nginx/html
+ADD *.html .
