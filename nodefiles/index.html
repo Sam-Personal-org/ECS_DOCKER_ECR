@@ -7,9 +7,13 @@
   <h1>Request Number: <span id="counter"></span></h1>
   <script>
     async function updateCounter() {
-      const res = await fetch('/counter');
-      const data = await res.json();
-      document.getElementById("counter").innerText = data.count;
+      try {
+        const res = await fetch('/counter');
+        const data = await res.json();
+        document.getElementById("counter").innerText = data.count;
+      } catch (err) {
+        document.getElementById("counter").innerText = "Error: backend not running!";
+      }
     }
     updateCounter();
   </script>
