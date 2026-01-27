@@ -1,8 +1,8 @@
 FROM node:18
 WORKDIR /app
 
-COPY server.js .
-COPY index.html .
+COPY nodefiles/server.js .
+COPY nodefiles/index.html .
 
 RUN npm install express
 
