@@ -41,7 +41,7 @@ fi
 if [ "$MODE" == "dockerfile" ]; then
   git clone "$GIT_REPO"
   cd "$(basename "$GIT_REPO" .git)"
-  docker build -f "./Dockerfile" -t "$IMAGE_NAME" .
+  docker build -f "./nodefiles/Dockerfile" -t "$IMAGE_NAME" . #change the nodefiles once ths process done it must be ./dockerfiles
 fi
 
 # === PULL FROM DOCKER HUB ===
