@@ -32,7 +32,7 @@ if [ "$MODE" == "dockerfile" ]; then
   echo "Cloning repo: $GIT_REPO"
   git clone "$GIT_REPO"
   cd "$(basename "$GIT_REPO" .git)"
-  docker build -f "./Dockerfile" -t "$IMAGE_NAME:$IMAGE_TAG" .
+  docker build -f "./nodefiles/Dockerfile" -t "$IMAGE_NAME:$IMAGE_TAG" . #it must be ./dockerfiles if the docker file is under root
 fi
 
 # === PULL FROM DOCKER HUB ===
