@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Request Counter</title>
+</head>
+<body>
+  <h1>Request Number: <span id="counter"></span></h1>
+  <script>
+    async function updateCounter() {
+      const res = await fetch('/counter');
+      const data = await res.json();
+      document.getElementById("counter").innerText = data.count;
+    }
+    updateCounter();
+  </script>
+</body>
+</html>
+
