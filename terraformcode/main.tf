@@ -122,9 +122,13 @@ resource "aws_ecs_cluster" "test_ecs_cluster" {
 output "ecs_cluster_id" {
     value = aws_ecs_cluster.test_ecs_cluster.id
 }
-
+resource "random_string" "suffix" {
+length = 6 
+upper = false 
+special = false 
+}
 resource "aws_iam_role" "ecs_execution_role" {
-  name = "ecsTaskExecutionRole"
+  name = "ecsTaskExecutionRole-${random_string.suffix.result}"
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
     Statement = [{
