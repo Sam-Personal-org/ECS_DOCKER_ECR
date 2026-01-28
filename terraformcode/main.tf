@@ -128,6 +128,9 @@ upper = false
 special = false 
 }
 resource "aws_iam_role" "ecs_execution_role" {
+lifecycle={
+CreateBeforeDestroy ="True"
+}
   name = "ecsTaskExecutionRole-${random_string.suffix.result}"
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
